@@ -1,7 +1,12 @@
 import sys
+<<<<<<< HEAD
 
 
 # import time
+=======
+# import time
+import numpy as np
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
 
 
 def read_file():
@@ -27,6 +32,7 @@ def read_file():
     return content, se
 
 
+<<<<<<< HEAD
 def comp(pr):
     with open("data/wiki.pagerank") as f:
         ite = 0
@@ -44,6 +50,12 @@ def comp(pr):
 def pagerank(content, vec):
     n = len(vec)
     alpha = 0.8
+=======
+def pagerank(content, vec):
+    # print("pagerank start")
+    n = len(vec)
+    alpha = 0.85
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
     outdegree = []
     dic = {}
     for i in range(n):
@@ -54,6 +66,10 @@ def pagerank(content, vec):
         # print(i)
         index_i = dic[content[i][0]]
         outdegree[index_i] += len(content[i][1])
+<<<<<<< HEAD
+=======
+    outdegree = np.array(outdegree)
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
     pr = []
     temp_i = []
     s = 0
@@ -62,20 +78,33 @@ def pagerank(content, vec):
         temp_i.append((1 - alpha) / n)
         if outdegree[i] == 0:
             s += pr[i]
+<<<<<<< HEAD
     for k in range(1, 2000):
+=======
+    pr = np.array(pr)
+    temp_i = np.array(temp_i)
+    for k in range(1, 201):
+        pr_old = pr.copy()
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
         for i in range(len(content)):
             index_i = dic[content[i][0]]
             for j in content[i][1]:
                 index_j = dic[j]
                 temp_i[index_j] += alpha * pr[index_i] / outdegree[index_i]
+<<<<<<< HEAD
 
         for i in range(n):
             pr[i] = temp_i[i] + alpha * s / n
             temp_i[i] = (1 - alpha) / n
+=======
+        pr = temp_i + alpha * s / n
+        temp_i = np.ones(temp_i.shape) * ((1 - alpha) / n)
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
         s = 0
         for i in range(n):
             if outdegree[i] == 0:
                 s += pr[i]
+<<<<<<< HEAD
         print(f"{k}turn:")
         comp(pr)
 
@@ -83,14 +112,35 @@ def pagerank(content, vec):
             for i in range(n):
                 sys.stdout.write(str(vec[i]) + ' ' + '{:.8f}'.format(pr[i]) + '\n')
                 sys.stdout.write("{} {:.10f}\n".format(item[0], item[1]))
+=======
+
+        dis = np.linalg.norm(pr_old - pr)
+        if dis < 1e-8:
+            for i in range(n):
+                sys.stdout.write(str(vec[i]) + ' ' + str(pr[i]) + '\n')
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
             break
 
 
 def main():
+<<<<<<< HEAD
     content, vec = read_file()
     vec = list(vec)
     vec.sort()
     pagerank(content, vec)
+=======
+    # time1 = time.time()
+    content, vec = read_file()
+    vec = list(vec)
+    vec.sort()
+    # time2 = time.time()
+    # print(len(content), len(vec))
+    # print(time2 - time1)
+    # print(vec)
+    pagerank(content, vec)
+    # time3 = time.time()
+    # print(time3 - time2)
+>>>>>>> 8dda32929c9eb2a50732c4b5a8296fee2394e1be
 
 
 if __name__ == '__main__':
